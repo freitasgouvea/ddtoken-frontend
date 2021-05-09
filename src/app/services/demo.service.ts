@@ -107,7 +107,7 @@ export class DemoService {
         alert('insuficient funds')
         return false
       }
-    }
+    } 
   }
 
   withdraw(vaultId: string, value: number) {
