@@ -1,0 +1,184 @@
+<div class="row">
+  <div class="col-lg-12" style="margin-top: 100px;">
+    <div class="page-header">
+      <h3>&nbsp;&nbsp;{{vault.name | uppercase}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button *ngIf="vaultView == 'info'" class="btn btn-primary" (click)="changeView('info')">Info</button>
+        <button *ngIf="vaultView != 'info'" class="btn btn-light" (click)="changeView('info')">Info</button>
+        <button *ngIf="vaultView == 'graph'" class="btn btn-primary" (click)="changeView('graph')">Balance/APY</button>
+        <button *ngIf="vaultView != 'graph'" class="btn btn-light" (click)="changeView('graph')">Balance/APY</button>
+        <button *ngIf="vaultView == 'holders'" class="btn btn-primary" (click)="changeView('holders')">Holders</button>
+        <button *ngIf="vaultView != 'holders'" class="btn btn-light" (click)="changeView('holders')">Holders</button>
+        <a href="../" class="btn btn-sm btn-light float-right">Back to Vaults</a>
+      </h3>
+    </div>
+    <div class="bs-component">
+      <div class="card bg-outline-primary" style="margin-top: 15px;">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-5 mt-2">
+              <div *ngIf="vaultView == 'graph'" echarts [options]="options"></div>
+              <div *ngIf="vaultView == 'holders'" echarts [options]="holdersGraphSource"></div>
+              <div *ngIf="vaultView == 'info'" class="row ml-1">
+                <div class="col-12 mb-2">
+                  <h5>Type: {{vault.source}}</h5>
+                  <fieldset class="form-group">
+                    <h2>{{vault.balance}} <small style="font-size: medium;">{{vault.symbol}}</small></h2>
+                    <h6>Total Cap.</h6>
+                  </fieldset>
+                </div>
+                <div class="col-4">
+                  <fieldset class="form-group">
+                    <h3>{{vault.apy}} <small>%</small></h3>
+                    <h6>APY</h6>
+                  </fieldset>
+                </div>
+                <div class="col-4">
+                  <fieldset class="form-group">
+                    <h3>{{vault.txs}} </h3>
+                    <h6>Transactions</h6>
+                  </fieldset>
+                </div>
+                <div class="col-4">
+                  <fieldset class="form-group">
+                    <h3>{{holdersNumber}}</h3>
+                    <h6>Holders</h6>
+                  </fieldset>
+                </div>
+                <div class="col-12 mb-2">
+                  <h6></h6>
+                  <h6>Coin: <strong>{{vault.name}}</strong></h6>
+                  <h6>Network: <strong>{{vault.network}}</strong></h6>
+                  <h6>Pattern: <strong>{{vault.pattern}}</strong></h6>
+                  <h6>Vault Address: <strong>{{vault.address}}</strong></h6>
+                </div>
+                <div class="col-12 mb-2">
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-5 mt-1">
+              <h6 class="mb-2"><i class="fas fa-circle text-success"></i>&nbsp;&nbsp;Connected Wallet: {{wallet.address}}</h6>
+              <div class="card text-white bg-primary mb-2">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-6">
+                      <div class="d-flex w-100 justify-content-between">
+                        <h6>Deposited Balance</h6>
+                      </div>
+                      <h4><strong>{{vaultBalance}} </strong><small style="font-size: medium;">{{vault.symbol}}</small></h4>
+                    </div>
+                    <div class="col-6">
+                      <div class="d-flex w-100 justify-content-between">
+                        <h6>Wallet Balance</h6>
+                      </div>
+                      <h4><strong>{{walletBalance}} <small style="font-size: medium;">{{vault.symbol}}</small></strong></h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="selectedOperation == 'menu'" class="list-group">
+                <a (click)="selectOperation('deposit')"
+                  class="list-group-item list-group-item-action flex-column align-items-start bg-success text-white">
+                  <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1"><strong>Deposit </strong></h5>
+                    <i class="fas fa-arrow-circle-down fa-lg"></i>
+                  </div>
+                  <small class="text-white"><strong>Avaiable: {{walletBalance}}</strong></small>
+                </a>
+                <a (click)="selectOperation('withdraw')"
+                  class="list-group-item list-group-item-action flex-column align-items-start bg-danger text-white mt-2">
+                  <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Withdraw</h5>
+                    <i class="fas fa-arrow-circle-up fa-lg"></i>
+                  </div>
+                  <small class="text-white">Avaiable: {{vaultBalance}}</small>
+                </a>
+                <a (click)="selectOperation('deposit')"
+                  class="list-group-item list-group-item-action flex-column align-items-start bg-light text-primary mt-2">
+                  <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1"><strong>Calculate</strong></h5>
+                    <i class="fas fa-calculator fa-lg"></i>
+                  </div>
+                  <small>Simulate your future profits</small>
+                </a>
+              </div>
+              <form *ngIf="selectedOperation == 'deposit'" [formGroup]="depositForm" (ngSubmit)="submitOperation()">
+                <fieldset>
+                  <legend>Deposit <a class="btn btn-sm btn-light float-right" (click)="selectOperation('menu')"
+                    >Back to Options</a></legend>
+                  <fieldset class="form-group">
+                    <label>Select a Value</label>
+                    <div class="input-group">
+                      <input type="number" class="form-control bg-white" id="valueApprove" name="valueApprove"
+                        formControlName="valueApprove">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text text-dark bg-light">{{vault!.symbol}}</span>
+                      </div>
+                    </div>
+                  </fieldset>
+                  <fieldset class="form-group">
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" value="">
+                        I agree with supporting text below as a natural lead-in to additional content.
+                      </label>
+                    </div>
+                  </fieldset>
+                </fieldset>
+                <button *ngIf="step == 1" type="submit" class="btn btn-block btn-success"><strong> Confirm Your Deposit</strong></button>
+              </form>
+              <form *ngIf="selectedOperation == 'withdraw'" [formGroup]="withdrawForm" (ngSubmit)="submitOperation()">
+                <fieldset>
+                <legend>Withdraw <a class="btn btn-sm btn-light float-right" (click)="selectOperation('menu')"
+                  >Back to Options</a></legend>
+                  <fieldset class="form-group">
+                    <label>Select a Value</label>
+                    <div class="input-group">
+                      <input type="number" class="form-control bg-white" id="valueApprove" name="valueApprove"
+                        formControlName="valueApprove">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text text-dark bg-light">{{vault!.symbol}}</span>
+                      </div>
+                    </div>
+                  </fieldset>
+                  <fieldset class="form-group">
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" value="">
+                        I agree with supporting text below as a natural lead-in to additional content.
+                      </label>
+                    </div>
+                  </fieldset>
+                </fieldset>
+                <button *ngIf="step == 1 && vaultBalance > 0" type="submit" class="btn btn-block btn-danger"><strong> Submit Your Withdraw</strong></button>
+                <button disabled *ngIf="step == 1 && vaultBalance == 0" type="submit" class="btn btn-block btn-danger"><strong> Submit Your Withdraw</strong></button>
+              </form>
+              <button *ngIf="step == 2" class="btn btn-block btn-info"(click)="confirmOperation()"><strong> Confirm in Your Wallet</strong></button>
+              <button disabled *ngIf="step == 3" class="btn btn-block btn-warning"><strong> Waiting for de Tx</strong></button>
+              <button *ngIf="step == 4" href="" class="btn btn-block btn-success" (click)="refreshWallet()"><strong> Refresh and see tx on Etherscan</strong></button>
+              <button *ngIf="step == 5" href="" class="btn btn-block btn-danger" (click)="refreshWallet()"><strong>Tx Failed</strong></button>
+            </div>
+            <div class="col-lg-2 mt-4">
+              <div class="row">
+                <div class="col-md-12 col-sm-6">
+                  <p><i class="fas fa-bookmark"></i>&nbsp;&nbsp;Select vault</p>
+                  <p *ngIf="selectedOperation == 'menu'"><i class="far fa-bookmark"></i>&nbsp;&nbsp;Select operation</p>
+                  <p *ngIf="selectedOperation != 'menu'"><i class="fas fa-bookmark"></i>&nbsp;&nbsp;Select operation</p>
+                  <p *ngIf="step < 2"><i class="far fa-bookmark"></i>&nbsp;&nbsp;Set a value and submit</p>
+                  <p *ngIf="step >= 2"><i class="fas fa-bookmark"></i>&nbsp;&nbsp;Set a value and submit</p>
+                </div>
+                <div class="col-md-12 col-sm-6">
+                  <p *ngIf="step < 3"><i class="far fa-bookmark"></i>&nbsp;&nbsp;Confirm operation in your wallet.</p>
+                  <p *ngIf="step >= 3"><i class="fas fa-bookmark"></i>&nbsp;&nbsp;Confirm operation in your wallet.</p>
+                  <p *ngIf="step < 3"><i class="far fa-bookmark"></i>&nbsp;&nbsp;Wait for de tx complete.</p>
+                  <p *ngIf="step >= 3"><i class="fas fa-bookmark"></i>&nbsp;&nbsp;Wait for de tx complete.</p>
+                  <p *ngIf="step < 4"><i class="far fa-bookmark"></i>&nbsp;&nbsp;Congratulations, your tx has been completed</p>
+                  <p *ngIf="step == 4"><i class="fas fa-bookmark"></i>&nbsp;&nbsp;Congratulations, your tx has been completed</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
