@@ -25,9 +25,64 @@ export class VaultComponent implements OnInit {
   calculateForm: FormGroup;
   holdersGraphSource = holdersData;
   holdersNumber: number;
+  xAxisData = ['2020Q2', '2020Q3', '2020Q4', '2021Q1', '2021Q2'];
+  fullCap = [ 20, 140, 200, 300, 350];
+  depositedCap = [ this.vaultBalance || 0];
   options: any;
   vaultView = 'info';
   operationValue: any;
+  transactions = [
+    {
+      address: '0x004',
+      value: 20,
+      txType: 'deposit'
+    },
+    {
+      address: '0x001',
+      value: 100,
+      txType: 'withdraw'
+    },
+    {
+      address: '0x002',
+      value: 20,
+      txType: 'deposit'
+    },
+    {
+      address: '0x003',
+      value: 50,
+      txType: 'withdraw'
+    },
+    {
+      address: '0x001',
+      value: 200,
+      txType: 'deposit'
+    },
+    {
+      address: '0x004',
+      value: 20,
+      txType: 'deposit'
+    },
+    {
+      address: '0x001',
+      value: 100,
+      txType: 'withdraw'
+    },
+    {
+      address: '0x002',
+      value: 20,
+      txType: 'deposit'
+    },
+    {
+      address: '0x003',
+      value: 50,
+      txType: 'withdraw'
+    },
+    {
+      address: '0x001',
+      value: 200,
+      txType: 'deposit'
+    }
+  ]
 
   constructor(
     private route: ActivatedRoute,
@@ -81,24 +136,18 @@ export class VaultComponent implements OnInit {
   }
 
   initBalanceGraph(){
-    const xAxisData = [];
-    const data1 = [];
-    const data2 = [];
-
-    for (let i = 0; i < 100; i++) {
-      xAxisData.push(i);
-      data1.push((Math.sin(i / 5) * (i / 5 - 10) + i / 6) * 5);
-      data2.push((Math.cos(i / 5) * (i / 5 - 10) + i / 6) * 5);
-    }
+    this.xAxisData = ['2020Q2', '2020Q3', '2020Q4', '2021Q1', '2021Q2'];
+    this.fullCap = [ 20, 140, 200, 300, 350 + this.vaultBalance];
+    this.depositedCap = [ 0, 0, 0, 0, this.vaultBalance || 0];
 
     this.options = {
       legend: {
-        data: ['balance', 'apy'],
+        data: ['Full Cap.','Your Cap.'],
         align: 'right',
       },
       tooltip: {},
       xAxis: {
-        data: xAxisData,
+        data: this.xAxisData,
         silent: false,
         splitLine: {
           show: false,
@@ -107,14 +156,14 @@ export class VaultComponent implements OnInit {
       yAxis: {},
       series: [
         {
-          name: 'balance',
+          name: 'Full Cap.',
           type: 'bar',
-          data: data1
+          data: this.fullCap
         },
         {
-          name: 'apy',
+          name: 'Your Cap.',
           type: 'bar',
-          data: data2
+          data: this.depositedCap
         },
       ],
       animationEasing: 'elasticOut'

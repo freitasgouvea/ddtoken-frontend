@@ -1,13 +1,15 @@
 <div class="row">
   <div class="col-lg-12" style="margin-top: 100px;">
     <div class="page-header">
-      <h3>&nbsp;&nbsp;{{vault.name | uppercase}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button *ngIf="vaultView == 'info'" class="btn btn-primary" (click)="changeView('info')">Info</button>
-        <button *ngIf="vaultView != 'info'" class="btn btn-light" (click)="changeView('info')">Info</button>
-        <button *ngIf="vaultView == 'graph'" class="btn btn-primary" (click)="changeView('graph')">Balance/APY</button>
-        <button *ngIf="vaultView != 'graph'" class="btn btn-light" (click)="changeView('graph')">Balance/APY</button>
-        <button *ngIf="vaultView == 'holders'" class="btn btn-primary" (click)="changeView('holders')">Holders</button>
-        <button *ngIf="vaultView != 'holders'" class="btn btn-light" (click)="changeView('holders')">Holders</button>
+      <h3>&nbsp;&nbsp;{{vault.name | uppercase}} <span class="text-dark" style="font-size: smaller;">Vault</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button *ngIf="vaultView == 'info'" class="btn btn-sm btn-primary" (click)="changeView('info')">Info</button>
+        <button *ngIf="vaultView != 'info'" class="btn btn-sm btn-light" (click)="changeView('info')">Info</button>
+        <button *ngIf="vaultView == 'graph'" class="btn btn-sm btn-primary" (click)="changeView('graph')">Balance</button>
+        <button *ngIf="vaultView != 'graph'" class="btn btn-sm btn-light" (click)="changeView('graph')">Balance</button>
+        <button *ngIf="vaultView == 'holders'" class="btn btn-sm btn-primary" (click)="changeView('holders')">Holders</button>
+        <button *ngIf="vaultView != 'holders'" class="btn btn-sm btn-light" (click)="changeView('holders')">Holders</button>
+        <button *ngIf="vaultView == 'transactions'" class="btn btn-sm btn-primary" (click)="changeView('transactions')">Transactions</button>
+        <button *ngIf="vaultView != 'transactions'" class="btn btn-sm btn-light" (click)="changeView('transactions')">Transactions</button>
         <a href="../" class="btn btn-sm btn-light float-right">Back to Vaults</a>
       </h3>
     </div>
@@ -16,9 +18,27 @@
         <div class="card-body">
           <div class="row">
             <div class="col-lg-5 mt-2">
+              <h6 *ngIf="vaultView == 'graph'">Balance</h6>
               <div *ngIf="vaultView == 'graph'" echarts [options]="options"></div>
+              <h6 *ngIf="vaultView == 'holders'">Holders</h6>
               <div *ngIf="vaultView == 'holders'" echarts [options]="holdersGraphSource"></div>
-              <div *ngIf="vaultView == 'info'" class="row ml-1">
+              <div *ngIf="vaultView == 'transactions'" class="row">
+                <div class="col-12 mb-2">
+                  <h6>Latest Txs</h6>
+                  <div style="width:400px; height:320px;line-height:3em;overflow:auto;padding:5px;">
+                    <ol class="list-group list-group-numbered">
+                      <li *ngFor="let item of transactions" class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                          {{item.address}}
+                        </div>
+                        <span *ngIf="item.txType == 'deposit'" style="font-size: large;"class="badge bg-success text-white rounded-pill">+ {{item.value}}</span>
+                        <span *ngIf="item.txType == 'withdraw'" style="font-size: large;" class="badge bg-danger text-white rounded-pill">- {{item.value}}</span>
+                      </li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="vaultView == 'info'" class="row">
                 <div class="col-12 mb-2">
                   <h5>Type: {{vault.source}}</h5>
                   <fieldset class="form-group">
