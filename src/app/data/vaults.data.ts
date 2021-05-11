@@ -8,11 +8,11 @@ export const vaultsData = [
         network: 'Ethereum Main Network',
         pattern: 'Native',
         address: '0x5803df166D2eed917Ccd9C6197c1D35D2C1474DD',
-        balance: 350,
+        balance: 100,
         apy: '3.68',
         abi: [],
         active: true,
-        txs: 125,
+        txs: 150,
         holders:[
             {
                 name: '0x001',
@@ -45,7 +45,7 @@ export const vaultsData = [
         apy: '12.55',
         abi: [],
         active: true,
-        txs: 125,
+        txs: 300,
         holders: [
             {
                 name: '0x001',
@@ -146,10 +146,10 @@ export const vaultsData = [
         holders: []
     },
     {
-        id: 'ddt',
-        name: 'DDT',
+        id: 'dtt',
+        name: 'DTT',
         coinId: '8',
-        symbol: 'DDT',
+        symbol: 'DTT',
         source: 'Yearn Vault V2',
         network: 'Ethereum Main Network',
         pattern: 'ERC-20',

@@ -37,13 +37,16 @@ export class DemoService {
   connectWalletDemo() {
     this.wallet = {
       address: '0x005',
-      assets: [{
+      assets: [
+      {
         coin: 'eth',
-        balance: 100.0000
-      }, {
+        balance: 320
+      }, 
+      {
         coin: 'dai',
-        balance: 500000.0000
-      }]
+        balance: 500000
+      }
+      ]
     }
     localStorage.setItem('wallet', JSON.stringify(this.wallet));
     console.log('DEMO: wallet created')
@@ -70,7 +73,7 @@ export class DemoService {
             name: this.wallet.address,
             value: value
           });
-          Array.prototype.push.apply(vaults[0].holders,newItem);
+          Array.prototype.push.apply(vaults[0].holders, newItem);
         } else {
           vaults[0].holders[4].value = vaults[0].holders[4].value + value;
         }
@@ -94,7 +97,7 @@ export class DemoService {
             name: this.wallet.address,
             value: value
           });
-          Array.prototype.push.apply(vaults[1].holders,newItem);
+          Array.prototype.push.apply(vaults[1].holders, newItem);
         } else {
           vaults[1].holders[4].value = vaults[1].holders[4].value + value;
         }
