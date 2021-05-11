@@ -1,0 +1,32 @@
+@media only screen and (max-width: 600px) {
+    .small-screen {
+        width:80px; 
+        height:280px;
+        line-height:3em;
+        overflow:auto;
+        padding:5px;
+    }
+    .large-screen {
+        width:400px; 
+        height:320px;
+        line-height:3em;
+        overflow:auto;
+        padding:5px;
+    }    
+  }
+  @media only screen and (min-width: 600px) {
+    .small-screen {
+        width:80px; 
+        height:280px;
+        line-height:3em;
+        overflow:auto;
+        padding:5px;
+    }
+    .large-screen {
+        width:400px; 
+        height:320px;
+        line-height:3em;
+        overflow:auto;
+        padding:5px;
+    }
+  }
