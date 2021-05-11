@@ -1,97 +1,95 @@
 <div class="row">
-    <div class="col-lg-8" style="margin-top: 100px;">
-      <div class="page-header">
-        <h2><i class="fas fa-coins text-dark"></i>&nbsp;&nbsp;VAULTS</h2>
-      </div>
-      <div class="bs-component">
-        <table class="table table-hover border border-secondary border-5" style="margin-top: 40px;">
-          <thead>
-            <tr>
-              <th scope="col">Coin</th>
-              <th scope="col">Vault Source</th>
-              <th scope="col" class="text-center">Full Capital</th>
-              <th scope="col" class="text-center">Your Capital</th>
-              <th scope="col" class="text-center">APY</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of vaults" (click)="selectVault(item)">
-                <th scope="row">{{item.symbol}}</th>
-                <td>{{item.source}}</td>
-                <td *ngIf="item.active == true" class="text-center">{{item.balance}}</td>
-                <td *ngIf="item.active != true" class="text-center">N/A</td>
-                <td *ngIf="item.active == true" class="text-center">{{item.holders[4]?.value || 0}}</td>
-                <td *ngIf="item.active != true" class="text-center">N/A</td>
-                <td *ngIf="item.active == true" class="text-center">{{item.apy}} %</td>
-                <td *ngIf="item.active != true" class="text-center">N/A</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+
+  <div class="col-lg-4 col-md-4 col-sm-12 order-sm-2" style="margin-top: 100px;" *ngIf="smallBox == 'offline'">
+    <div class="page-header">
+      <h4><i class="fas fa-circle text-danger"></i>&nbsp;&nbsp;OFFLINE</h4>
     </div>
-
-    <div class="col-lg-4" style="margin-top: 100px;" *ngIf="smallBox == 'offline'">
-      <div class="page-header">
-        <h4><i class="fas fa-circle text-danger"></i>&nbsp;&nbsp;OFFLINE</h4>
-      </div>
-      <div class="bs-component">
-        <div class="card text-center bg-light border border-secondary mb-3"
-          style="max-width: 100rem; margin-top: 40px;">
-          <div class="card-body">
-            <h5 class="card-title">CONNECT YOUR WALLET</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-              content.</p>
-            <button type="button" class="btn btn-warning" (click)="connectDemo()">Connect Wallet</button>
-          </div>
+    <div class="bs-component">
+      <div class="card text-center bg-light border border-secondary mb-3" style="max-width: 100rem; margin-top: 40px;">
+        <div class="card-body">
+          <h5 class="card-title">CONNECT YOUR WALLET</h5>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+            content.</p>
+          <button type="button" class="btn btn-warning" (click)="connectDemo()">Connect Wallet</button>
         </div>
       </div>
-    </div>
-
-    <div class="col-lg-4" style="margin-top: 100px;" *ngIf="smallBox == 'waiting'">
-      <div class="page-header">
-        <h4><i class="fas fa-circle text-danger"></i>&nbsp;&nbsp;OFFLINE</h4>
-      </div>
-      <div class="bs-component">
-        <div class="card text-center bg-light border border-secondary mb-3"
-          style="max-width: 100rem; margin-top: 40px;">
-          <div class="card-body">
-            <h5 class="card-title">Autorize in your wallet</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-              content.</p>
-            <button disabled type="button" class="btn btn-warning">Waiting</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-lg-4" style="margin-top: 100px;" *ngIf="smallBox == 'connected'">
-      <div class="page-header">
-        <h4><i class="fas fa-circle text-success"></i>&nbsp;&nbsp;CONNECTED</h4>
-        <h6>Address: {{wallet.address}}</h6>
-      </div>
-
-      <div class="bs-component" >
-        <div class="list-group" style="margin-top: 20px;">
-          <div *ngFor="let item of wallet.assets" (click)="selectVault(item.coin)" class="list-group-item 
-          bg-light text-primary border border-primary list-group-item-action flex-column align-items-start">
-            <div class="d-flex w-100 justify-content-between">
-              <h4 class="mb-1">{{item.balance}}</h4>
-              <p class="mb-1">{{item.coin}}</p>
-            </div>
-            <p class="mb-1">{{item.coin}}</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="bs-component" *ngIf="assets == 0">
-        <div class="card text-center bg-light border border-secondary mb-3"
-          style="max-width: 100rem; margin-top: 10px;">
-          <div class="card-body">
-            <h5 class="card-title">MAKE YOUR FIRST DEPOSIT</h5>
-            <button type="button" class="btn btn-success" (click)="tryBox('eth')">Try with ETH</button>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
+
+  <div class="col-md-4 col-md-4 col-sm-12 order-sm-2" style="margin-top: 100px;" *ngIf="smallBox == 'waiting'">
+    <div class="page-header">
+      <h4><i class="fas fa-circle text-danger"></i>&nbsp;&nbsp;OFFLINE</h4>
+    </div>
+    <div class="bs-component">
+      <div class="card text-center bg-light border border-secondary mb-3" style="max-width: 100rem; margin-top: 40px;">
+        <div class="card-body">
+          <h5 class="card-title">Autorize in your wallet</h5>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+            content.</p>
+          <button disabled type="button" class="btn btn-warning">Waiting</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4 col-md-4 col-sm-12 order-sm-2" style="margin-top: 100px;" *ngIf="smallBox == 'connected'">
+    <div class="page-header">
+      <h4><i class="fas fa-circle text-success"></i>&nbsp;&nbsp;CONNECTED</h4>
+      <h6>Address: {{wallet.address}}</h6>
+    </div>
+
+    <div class="bs-component">
+      <div class="list-group" style="margin-top: 20px;">
+        <div *ngFor="let item of wallet.assets" (click)="selectVault(item.coin)" class="list-group-item 
+          bg-light text-primary border border-primary list-group-item-action flex-column align-items-start">
+          <div class="d-flex w-100 justify-content-between">
+            <h3 class="mb-1">{{item.balance}}</h3>
+          </div>
+          <p class="mb-1">{{item.coin}}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bs-component" *ngIf="assets == 0">
+      <div class="card text-center bg-light border border-secondary mb-3" style="max-width: 100rem; margin-top: 10px;">
+        <div class="card-body">
+          <h5 class="card-title">MAKE YOUR FIRST DEPOSIT</h5>
+          <button type="button" class="btn btn-success" (click)="tryBox('eth')">Try with ETH</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="col-lg-8 col-md-8 col-sm-12 order-sm-1" style="margin-top: 100px;">
+    <div class="page-header">
+      <h3><i class="fas fa-coins text-dark"></i>&nbsp;&nbsp;VAULTS</h3>
+    </div>
+    <div class="bs-component">
+      <table class="table table-hover border border-secondary border-5" style="margin-top: 40px;">
+        <thead>
+          <tr>
+            <th scope="col">Coin</th>
+            <th scope="col">Vault Source</th>
+            <th scope="col" class="text-center">Full Capital</th>
+            <th scope="col" class="text-center">Your Capital</th>
+            <th scope="col" class="text-center">APY</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of vaults" (click)="selectVault(item)">
+              <th scope="row">{{item.symbol}}</th>
+              <td>{{item.source}}</td>
+              <td *ngIf="item.active == true" class="text-center">{{item.balance}}</td>
+              <td *ngIf="item.active != true" class="text-center">N/A</td>
+              <td *ngIf="item.active == true" class="text-center">{{item.holders[4]?.value || 0}}</td>
+              <td *ngIf="item.active != true" class="text-center">N/A</td>
+              <td *ngIf="item.active == true" class="text-center">{{item.apy}} %</td>
+              <td *ngIf="item.active != true" class="text-center">N/A</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
