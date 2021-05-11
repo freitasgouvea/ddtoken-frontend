@@ -40,7 +40,7 @@
               </div>
               <div *ngIf="vaultView == 'info'" class="row">
                 <div class="col-12 mb-2">
-                  <h5>Type: {{vault.source}}</h5>
+                  <h5 class="text-dark">Type: <span class="text-primary">{{vault.source}}</span></h5>
                   <fieldset class="form-group">
                     <h2>{{vault.balance}} <small style="font-size: medium;">{{vault.symbol}}</small></h2>
                     <h6 class="text-dark">Total Cap.</h6>
@@ -76,7 +76,6 @@
               </div>
             </div>
             <div class="col-lg-5 mt-1">
-              <h6 class="mb-2"><i class="fas fa-circle text-success"></i>&nbsp;&nbsp;Connected Wallet: {{wallet.address}}</h6>
               <div class="card text-white bg-primary mb-2">
                 <div class="card-body">
                   <div class="row">
@@ -112,7 +111,7 @@
                   </div>
                   <small class="text-white">Avaiable: {{vaultBalance}}</small>
                 </a>
-                <a (click)="selectOperation('deposit')"
+                <a disabled
                   class="list-group-item list-group-item-action flex-column align-items-start bg-light text-primary mt-2">
                   <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1"><strong>Calculate</strong></h5>

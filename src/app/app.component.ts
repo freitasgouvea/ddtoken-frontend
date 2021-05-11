@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 //import { MetamaskService } from 'src/app/services/metamask.service';
 
 @Component({
@@ -9,7 +10,9 @@ import { Component, OnInit } from '@angular/core';
 export class AppComponent implements OnInit {
   title = 'DTToken'
 
-  constructor() { }
+  constructor(
+    public router: Router
+  ) { }
 
   ngOnInit() { }
 

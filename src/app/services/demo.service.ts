@@ -61,7 +61,7 @@ export class DemoService {
     let vaults = this.getVaults();
     if (vaultId = 'eth') {
       let walletBalance = this.wallet.assets[0].balance;
-      if (value < walletBalance) {
+      if (value <= walletBalance) {
         this.wallet.assets[0].balance = walletBalance - value;
         localStorage.setItem('wallet', JSON.stringify(this.wallet));
         vaults[0].balance = vaults[0].balance + value;
@@ -85,7 +85,7 @@ export class DemoService {
       }
     } else {
       let walletBalance = this.wallet.assets[1].balance;
-      if (value < walletBalance) {
+      if (value <= walletBalance) {
         this.wallet.assets[1].balance = walletBalance - value;
         localStorage.setItem('wallet', JSON.stringify(this.wallet));
         vaults[1].balance = vaults[1].balance + value;

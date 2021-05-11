@@ -8,7 +8,7 @@
       <div class="card text-center bg-light border border-secondary mb-3" style="max-width: 100rem; margin-top: 40px;">
         <div class="card-body">
           <h5 class="card-title">CONNECT YOUR WALLET</h5>
-          <p class="card-text">In this demo you can simulate offchain how to interact with our app and connect vaults. Click connect and start your journey.</p>
+          <p class="card-text">In this demo you can simulate offchain how to interact with our app and connected vaults. Click start and simulate your journey.</p>
           <button type="button" class="btn btn-warning" (click)="connectDemo()">Start Demo</button>
         </div>
       </div>
@@ -43,9 +43,9 @@
         <div *ngFor="let item of wallet.assets" (click)="selectVault(item.coin)" class="list-group-item 
           bg-light text-primary border border-primary list-group-item-action flex-column align-items-start">
           <div class="d-flex w-100 justify-content-between">
-            <h3 class="mb-1">{{item.balance}}</h3>
+            <h5 class="mb-1">{{item.coin | uppercase}}</h5>
+            <h4 class="mb-1">{{item.balance}}</h4>
           </div>
-          <p class="mb-1">{{item.coin}}</p>
         </div>
       </div>
     </div>
@@ -54,6 +54,7 @@
       <div class="card text-center bg-primary text-white border border-success mb-3" style="max-width: 100rem; margin-top: 10px;">
         <div class="card-body">
           <h5 class="card-title">MAKE YOUR FIRST DEPOSIT</h5>
+          <p class="card-text">You can simulate your status making deposits and withdraws.</p>
           <button type="button" class="btn btn-success" (click)="tryBox('eth')">Try with ETH</button>
         </div>
       </div>
