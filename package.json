@@ -22,6 +22,7 @@
     "bootstrap": "^5.0.0-beta3",
     "echarts": "^5.1.1",
     "ethers": "^5.1.4",
+    "express": "^4.17.1",
     "jquery": "^3.6.0",
     "ngx-echarts": "^6.0.1",
     "popper.js": "^1.16.1-lts",
