@@ -8,7 +8,7 @@ export const vaultsData = [
         network: 'Ethereum Main Network',
         pattern: 'Native',
         address: '0x5803df166D2eed917Ccd9C6197c1D35D2C1474DD',
-        balance: 100,
+        balance: 350,
         apy: '3.68',
         abi: [],
         active: true,
